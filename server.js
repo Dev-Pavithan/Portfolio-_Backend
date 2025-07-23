@@ -35,7 +35,7 @@ app.use('/api/v1/education', educationRoutes);
 app.use('/api/v1/certificates', certificateRoutes);
 
 // Root API response
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
   res.status(200).send('Hi This is Pavithan Portfolio Backend');
 });
 
