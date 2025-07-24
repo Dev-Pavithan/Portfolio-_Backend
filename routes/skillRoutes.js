@@ -1,12 +1,27 @@
 const express = require('express');
-const { addSkills, getSkills, updateSkills, deleteSkills } = require('../controllers/skillController.js');
+const {
+  getSkills,
+  createCategory,
+  updateCategory,
+  deleteCategory,
+  createSubcategory,
+  updateSubcategory,
+  deleteSubcategory
+} = require('../controllers/skillController.js');
 const { protect, authorize } = require('../middlewares/auth');
 
 const router = express.Router();
 
-router.post('/', protect, authorize('admin'), addSkills);
+// Public routes
 router.get('/', getSkills);
-router.put('/:id', protect, authorize('admin'), updateSkills);
-router.delete('/:id', protect, authorize('admin'), deleteSkills);
+
+// Admin protected routes
+router.post('/categories', protect, authorize('admin'), createCategory);
+router.put('/categories/:categoryId', protect, authorize('admin'), updateCategory);
+router.delete('/categories/:categoryId', protect, authorize('admin'), deleteCategory);
+
+router.post('/categories/:categoryId/subcategories', protect, authorize('admin'), createSubcategory);
+router.put('/categories/:categoryId/subcategories/:subcategoryId', protect, authorize('admin'), updateSubcategory);
+router.delete('/categories/:categoryId/subcategories/:subcategoryId', protect, authorize('admin'), deleteSubcategory);
 
 module.exports = router;

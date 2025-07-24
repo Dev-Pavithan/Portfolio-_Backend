@@ -1,27 +1,31 @@
-const express = require('express');
-const {
-  getSkills,
-  createCategory,
-  updateCategory,
-  deleteCategory,
-  createSubcategory,
-  updateSubcategory,
-  deleteSubcategory
-} = require('../controllers/skillController.js');
-const { protect, authorize } = require('../middlewares/auth');
+const mongoose = require('mongoose');
 
-const router = express.Router();
+const SubcategorySchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'Please add a subcategory name']
+  },
+  skills: {
+    type: [String],
+    required: [true, 'Please add at least one skill']
+  }
+});
 
-// Public routes
-router.get('/', getSkills);
+const CategorySchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'Please add a category name'],
+    unique: true
+  },
+  subcategories: [SubcategorySchema]
+}, { _id: true });
 
-// Admin protected routes
-router.post('/categories', protect, authorize('admin'), createCategory);
-router.put('/categories/:categoryId', protect, authorize('admin'), updateCategory);
-router.delete('/categories/:categoryId', protect, authorize('admin'), deleteCategory);
+const SkillSchema = new mongoose.Schema({
+  categories: [CategorySchema],
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
 
-router.post('/categories/:categoryId/subcategories', protect, authorize('admin'), createSubcategory);
-router.put('/categories/:categoryId/subcategories/:subcategoryId', protect, authorize('admin'), updateSubcategory);
-router.delete('/categories/:categoryId/subcategories/:subcategoryId', protect, authorize('admin'), deleteSubcategory);
-
-module.exports = router;
+module.exports = mongoose.model('Skill', SkillSchema);
