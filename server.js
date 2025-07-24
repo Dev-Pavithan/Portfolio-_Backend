@@ -17,7 +17,7 @@ app.use(cookieParser());
 
 // Define allowed origins (for local and production)
 const allowedOrigins = [
-  'http://localhost:8080', // Local Vite frontend
+  'http://localhost:5173', // Local Vite frontend
   'https://mellow-eclair-ff0c91.netlify.app' // Replace with your production frontend
 ];
 
