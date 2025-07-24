@@ -44,6 +44,7 @@ const skillRoutes = require('./routes/skillRoutes');
 const workExperienceRoutes = require('./routes/workExperienceRoutes.js');
 const educationRoutes = require('./routes/educationRoutes.js');
 const certificateRoutes = require('./routes/certificateRoutes.js');
+const recentActivityRoutes = require('./routes/recentActivityRoutes.js');
 
 // Routes
 app.use('/api/v1/auth', auth);
@@ -53,6 +54,7 @@ app.use('/api/v1/skills', skillRoutes);
 app.use('/api/v1/work-experience', workExperienceRoutes);
 app.use('/api/v1/education', educationRoutes);
 app.use('/api/v1/certificates', certificateRoutes);
+app.use('/api/v1/recent-activity', recentActivityRoutes);
 
 // Root API response
 app.get('/', (req, res) => {
