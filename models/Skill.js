@@ -1,13 +1,20 @@
 const mongoose = require('mongoose');
 
-const SkillSchema = new mongoose.Schema({
-  technical: {
-    type: [String],
-    required: [true, 'Please add at least one technical skill']
+const CategorySchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'Category name is required']
   },
-  interpersonal: {
+  subcategories: {
     type: [String],
-    required: [true, 'Please add at least one interpersonal skill']
+    required: [true, 'Please add at least one subcategory']
+  }
+});
+
+const SkillSchema = new mongoose.Schema({
+  categories: {
+    type: [CategorySchema],
+    required: [true, 'Please add at least one category']
   },
   createdAt: {
     type: Date,
