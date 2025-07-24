@@ -14,9 +14,22 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+
+// Define allowed origins (for local and production)
+const allowedOrigins = [
+  'http://localhost:5173', // Local Vite frontend
+  'https://your-frontend-domain.com' // Replace with your production frontend
+];
+
 app.use(
   cors({
-    origin: '*', // Allow any origin
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('CORS not allowed for this origin'));
+      }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
